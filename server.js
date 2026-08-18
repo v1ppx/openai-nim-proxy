@@ -583,15 +583,30 @@ app.post('/v1/chat/completions', async (req, res) => {
 // ROOT
 // ---------------------------------------------------------
 
+// Root endpoint
 app.get('/', (req, res) => {
-
   res.json({
     status: 'ok',
     service: 'OpenAI to NVIDIA NIM Proxy',
     message: 'Proxy is running.'
   });
-
 });
+
+// OpenAI-compatible /v1 endpoint
+app.get('/v1', (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'OpenAI to NVIDIA NIM Proxy',
+    message: 'OpenAI-compatible API is running.',
+    endpoints: {
+      models: '/v1/models',
+      chat_completions: '/v1/chat/completions'
+    }
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
 
 
 // ---------------------------------------------------------
